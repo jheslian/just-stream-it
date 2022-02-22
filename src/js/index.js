@@ -1,4 +1,4 @@
-let films_url = `http://127.0.0.1:8000/api/v1/titles/?&genre=`
+let films_url = `http://127.0.0.1:8000/api/v1/titles/?`
 let genre_url = `http://127.0.0.1:8000/api/v1/genres/`
 let sort = "&sort_by=-imdb_score"
 let pages = [1, 2 , 3, 4, 5, 6, 7, 8, 9, 10]
@@ -6,7 +6,9 @@ let pageNo = pages[Math.floor(Math.random() * pages.length)]
 
 
 function filmUrl(mainURL, genre){
-    return mainURL.concat(genre,"&page=",pageNo,sort)
+    return mainURL.concat("&genre=",genre,sort)
+
+    //return mainURL.concat("&genre=",genre,"&page=",pageNo,sort)
 }
    
        
@@ -104,8 +106,7 @@ async function getGenreFilm(url, idCategory){
         }
     }).catch(error => console.log(error))
 }
-let cat = document.getElementById("best-films")
-console.log("2", cat.children.length === 7)
+
 /**
  * this will replace the current image src if there's an error w/ the image
  *
@@ -115,32 +116,28 @@ function imgError(){
     return "this.onerror=null; this.src='src/images/no_image.png';" 
 }
 
-/** 1.
- * GET TOP 7 of a CATEGORY
- * ex: getGenreFilm(films_url + "?genre=action")
- */
-
-let bestFilmsUrl = "http://127.0.0.1:8000/api/v1/titles/?imdb_score_min=9&page=".concat(pageNo)
-//let bestFilmsUrl = "http://127.0.0.1:8000/api/v1/titles/?genre=Biography"
-const topScore = 10
-let idCategory = "best-films"
-getGenreFilm(bestFilmsUrl ,idCategory )
-let categoryContainer = document.getElementById(idCategory)
-console.log("fix", categoryContainer.children.length)
-// while (categoryContainer.children.length < 8){
-//     console.log("test")
-// }
+/**************   top rated films   **************/
+let goodFilmsUrl = "http://127.0.0.1:8000/api/v1/titles/?imdb_score_min=9&page=".concat(pageNo)
+let idCategory = "good-films"
+getGenreFilm(goodFilmsUrl ,idCategory )
 
 
-/** 2. 
- * GET TOP 7 of all film : random from diff category
- * check : that its not on the category
- */
+/**************   best film   **************/
+bestFilmUrl = films_url.concat(sort)
+//console.log("ded", bestFilmUrl)
+let bestFilmContainer = document.getElementById("best-film")
+fetchUrl(bestFilmUrl).then((res) => {
+    let data = `
+        <div class="top-film__data">
+            <p class="top-film__title">${res.results[0].title}</p>
+            <button class="btn btn__play"><i class="fa fa-play"></i> Play</button>
+            <button class="btn btn__info">&#9432; More info</button>
+        </div>    
+        <img class="top-film__img" src="${res.results[0].image_url}"  onerror="${imgError()}"/> 
+        ` 
+    bestFilmContainer.innerHTML = data
 
-/** 3. 
- * GET TOP 1 of all film
- * check : that its not on the previous list(1 & 2)
- */
+})
 
 /** 4. 
  * CREATE film modal

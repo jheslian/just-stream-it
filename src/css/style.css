@@ -48,6 +48,7 @@
 .film__container {
   display: flex;
   justify-content: center;
+  margin-bottom: 8rem;
 }
 .film__content {
   width: 25%;
@@ -64,17 +65,52 @@
 }
 .title__genre {
   margin-top: 5rem;
-  margin-bottom: 0;
-  font-size: 20px;
+  margin-bottom: 3rem;
+  font-size: 30px;
+  font-weight: bold;
 }
 .title__category {
   margin-top: 0.5rem;
-  font-size: 8px;
+  font-size: 16px;
 }
 
 .img__category {
-  width: 80%;
-  height: 80%;
+  width: 200px;
+  height: 300px;
+}
+
+.top-film__img {
+  width: 40%;
+  height: 60vh;
+}
+.top-film__container {
+  background-color: black;
+  width: 100%;
+  height: 40%;
+  display: flex;
+  justify-content: center;
+}
+.top-film__data {
+  width: 50%;
+  height: 100%;
+  text-align: center;
+}
+.top-film__title {
+  color: #fff;
+  font-size: 70px;
+  margin-bottom: 10px;
+}
+
+.btn {
+  height: 30px;
+  width: 100px;
+  border: none;
+  border-radius: 30px 30px;
+  margin: 10px;
+}
+.btn__info {
+  background-color: gray;
+  color: #fff;
 }
 
 /*# sourceMappingURL=style.css.map */
