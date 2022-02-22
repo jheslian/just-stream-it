@@ -1,6 +1,16 @@
-let films_url = `http://127.0.0.1:8000/api/v1/titles/`
+let films_url = `http://127.0.0.1:8000/api/v1/titles/?&genre=`
 let genre_url = `http://127.0.0.1:8000/api/v1/genres/`
+let sort = "&sort_by=-imdb_score"
+let pages = [1, 2 , 3, 4, 5, 6, 7, 8, 9, 10]
+let pageNo = pages[Math.floor(Math.random() * pages.length)]
 
+
+function filmUrl(mainURL, genre){
+    return mainURL.concat(genre,"&page=",pageNo,sort)
+}
+   
+       
+    
 /**
  * get data
  *
@@ -23,13 +33,13 @@ function getGenres(url, callback){
         for (let i = 0; i < res.results.length; i++) {
             genres_list.push(res.results[i].name)
         }
-        console.log( res.next == null)
+        //console.log( res.next == null)
         if (res.next)
             getGenres(res.next, callback)
         if(res.next == null){
             callback.call(this);
         }    
-    })     
+    }).catch(error => console.log(error))     
 }    
 
 /*******************************     Add categories     *******************************/
@@ -38,9 +48,11 @@ function getGenres(url, callback){
  */
 getGenres(genre_url, function(){
     let genres = []
-    for (let i = 0; i < 3; i++) { 
+    for (let i = 0; i < genres_list.length; i++) { 
         random = genres_list[Math.floor(Math.random() * genres_list.length)]
-        genres.push(random)        
+        if (genres.length < 3 && genres.indexOf(random) === -1){
+            genres.push(random)
+        }       
     }
 
     let categories = document.getElementById('categories')
@@ -54,7 +66,7 @@ getGenres(genre_url, function(){
         newdiv.innerHTML=section
         categories.appendChild(newdiv)
 
-        getGenreFilm(films_url + "?genre="+ String(genre), String(genre), function(){})
+        getGenreFilm(filmUrl(films_url,String(genre)), String(genre))
 
     });
 })
@@ -62,21 +74,16 @@ getGenres(genre_url, function(){
 /************************************   Add films   ************************************/
 //filmList = []
 //let data = ""
-function getGenreFilm(url, idCategory, callback){
+
+
+async function getGenreFilm(url, idCategory){
     let categoryContainer = document.getElementById(idCategory)
-    if (categoryContainer.children.length != null && categoryContainer.children.length === 7){
-        callback.call(this);
-    }
-    fetchUrl(url).then((res) => {
-        
+    console.log("1", categoryContainer.children.length === 7)
+   
+    await fetchUrl(url).then((res) => {  
+       // console.log("res.status",res.status) 
+       
         for (let i = 0; i < res.results.length; i++) {
-           
-            // if (categoryContainer.children.length != null && categoryContainer.children.length === 7){
-            //     //callback.call(this);
-            //     console.log("full")
-            //    // console.log("de",filmList)
-            //     break
-            // }
             if (categoryContainer.children.length != null && categoryContainer.children.length < 7){
                // console.log(" not full")
                 let filmDiv = document.createElement('div')
@@ -95,9 +102,10 @@ function getGenreFilm(url, idCategory, callback){
         if (categoryContainer.children.length != null && categoryContainer.children.length< 7){
             getGenreFilm(res.next, idCategory)
         }
-    }).catch( error => console.log(error) )
+    }).catch(error => console.log(error))
 }
-
+let cat = document.getElementById("best-films")
+console.log("2", cat.children.length === 7)
 /**
  * this will replace the current image src if there's an error w/ the image
  *
@@ -111,16 +119,17 @@ function imgError(){
  * GET TOP 7 of a CATEGORY
  * ex: getGenreFilm(films_url + "?genre=action")
  */
-//let bestFilmsUrl = "http://127.0.0.1:8000/api/v1/titles/?imdb_score_min=9"
-let bestFilmsUrl = "http://127.0.0.1:8000/api/v1/titles/?genre=Biography"
+
+let bestFilmsUrl = "http://127.0.0.1:8000/api/v1/titles/?imdb_score_min=9&page=".concat(pageNo)
+//let bestFilmsUrl = "http://127.0.0.1:8000/api/v1/titles/?genre=Biography"
 const topScore = 10
 let idCategory = "best-films"
-getGenreFilm(bestFilmsUrl,idCategory )
+getGenreFilm(bestFilmsUrl ,idCategory )
 let categoryContainer = document.getElementById(idCategory)
 console.log("fix", categoryContainer.children.length)
-while (categoryContainer.children.length && categoryContainer.children.length < 8){
-    console.log("test")
-}
+// while (categoryContainer.children.length < 8){
+//     console.log("test")
+// }
 
 
 /** 2. 
