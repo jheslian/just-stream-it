@@ -45,7 +45,6 @@ getGenres(genre_url, function(){
 
     let categories = document.getElementById('categories')
     genres.forEach(function(genre) {
-        console.log("link", films_url + "?genre=" + genre)
         let newdiv = document.createElement("div")
         let section = `
         <p class="title title__genre">${genre}</p>
@@ -55,56 +54,73 @@ getGenres(genre_url, function(){
         newdiv.innerHTML=section
         categories.appendChild(newdiv)
 
-        console.log("deq", genre)
         getGenreFilm(films_url + "?genre="+ String(genre), String(genre), function(){})
 
     });
 })
 
 /************************************   Add films   ************************************/
-filmList = []
-let data = ""
+//filmList = []
+//let data = ""
 function getGenreFilm(url, idCategory, callback){
     let categoryContainer = document.getElementById(idCategory)
+    if (categoryContainer.children.length != null && categoryContainer.children.length === 7){
+        callback.call(this);
+    }
     fetchUrl(url).then((res) => {
         
         for (let i = 0; i < res.results.length; i++) {
-            if (filmList.length === 7){
-                callback.call(this);
-                console.log("full")
-                console.log("de",filmList)
-                break
-            }else{  
-                console.log(" not full")
-                data += `
-                <div class="film__content">
+           
+            // if (categoryContainer.children.length != null && categoryContainer.children.length === 7){
+            //     //callback.call(this);
+            //     console.log("full")
+            //    // console.log("de",filmList)
+            //     break
+            // }
+            if (categoryContainer.children.length != null && categoryContainer.children.length < 7){
+               // console.log(" not full")
+                let filmDiv = document.createElement('div')
+                filmDiv.id = res.results[i].id
+                filmDiv.className = "film__content"
+                categoryContainer.appendChild(filmDiv)
+                filmContainer = document.getElementById(res.results[i].id)
+            
+                let data = `
                     <p class="title__category">${res.results[i].title}</p>
-                    <img class="img__category" src="${res.results[i].image_url}" />
-                </div>` 
-                filmList.push(res.results[i])
+                    <img class="img__category" src="${res.results[i].image_url}"  onerror="${imgError()}"/> ` 
+                filmContainer.innerHTML = data
             } 
         }
-        categoryContainer.innerHTML = data
-    
-        if (filmList.length < 7){
-            getGenreFilm(res.next)
+        
+        if (categoryContainer.children.length != null && categoryContainer.children.length< 7){
+            getGenreFilm(res.next, idCategory)
         }
-    })  
-    
-  
+    }).catch( error => console.log(error) )
 }
 
-
+/**
+ * this will replace the current image src if there's an error w/ the image
+ *
+ * @return {string} 
+ */
+function imgError(){
+    return "this.onerror=null; this.src='src/images/no_image.png';" 
+}
 
 /** 1.
  * GET TOP 7 of a CATEGORY
  * ex: getGenreFilm(films_url + "?genre=action")
  */
-let bestFilmsUrl = "http://127.0.0.1:8000/api/v1/titles/?imdb_score_min=9"
-let bestFilmContainer = document.getElementById('best-films')
-let bestFilmList = []
+//let bestFilmsUrl = "http://127.0.0.1:8000/api/v1/titles/?imdb_score_min=9"
+let bestFilmsUrl = "http://127.0.0.1:8000/api/v1/titles/?genre=Biography"
 const topScore = 10
-getGenreFilm(bestFilmsUrl, "best-films", function(){})
+let idCategory = "best-films"
+getGenreFilm(bestFilmsUrl,idCategory )
+let categoryContainer = document.getElementById(idCategory)
+console.log("fix", categoryContainer.children.length)
+while (categoryContainer.children.length && categoryContainer.children.length < 8){
+    console.log("test")
+}
 
 
 /** 2. 
@@ -121,32 +137,4 @@ getGenreFilm(bestFilmsUrl, "best-films", function(){})
  * CREATE film modal
  */
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// genres_list.forEach(el => {
-//     console.log(el)
-    
-// });
-
-// //function random_item(items) {
-// //    return items[Math.floor(Math.random()*items.length)];
-// //}
-
-
-
-
-// console.log("DDD")
 
