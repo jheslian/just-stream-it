@@ -1,20 +1,24 @@
 $primary-color: #000;
 $secondary-color: #fff;
 $header-color: gray;
-
+$tertiary-color: rgba(255, 255, 255, 0.475);
 $colour-primary: #15DEA5;
 $colour-secondary: #001534;
 $colour-accent: #D5FFB8;
 $colour-white: #fff;
 $colour-invalid: #DB464C;
-
+$background-color: #436b95;
 $heading-shadow-size: .55rem;
 $layout-margin: 6rem;
 $grid-gutter: $layout-margin * .25;
 
+body{
+    background-color: $background-color;
+    
+}
 
 .header {
-    background: $header-color;
+    background: $tertiary-color;
     height: 8rem;
     display: flex;
     align-items: center;
@@ -38,53 +42,80 @@ $grid-gutter: $layout-margin * .25;
         padding-left: 1.5rem;
         & a{
         text-decoration: none;
-        color: $colour-accent;
+        color: $secondary-color;
         }
         &--active {
-            color: $colour-secondary;
+            color: $secondary-color;
             &:hover{
                 cursor:default;
-                color: $colour-secondary;
+                color: $background-color;
             }
         }
         & a:hover{
-            color: $colour-white;
+            color: $background-color;
         }
     }
 }
 
 .film {
     margin-top: 1rem;
-    height: 15rem;
-    //border: .1rem solid $primary-color;
-
+    height: 100%;
+    position: relative;
+    
     &__header{
         width: auto;   
     }
-    &__container{
+    &__container{//carrousel
         display: flex;
         justify-content: center;
-        margin-bottom: 8rem;
+        margin-bottom: 8rem; 
+       
+        
+        &--keys{
+            position: absolute;
+            cursor: pointer;
+            height: 60px;
+            width: 60px;
+            margin-top: -40px;
+
+            //justify-content: space-evenly;
+        }   
+        &--rightBtn{
+            margin-right: 3rem;
+            right:0;
+            opacity: 3;
+            transform: rotate(0deg);
+        }
+        &--leftBtn{
+            margin-left: 3rem;
+            left: 0;
+            opacity: 3;
+            transform: rotate(180deg);
+        }
     }
     &__content{
         //border: .1rem solid $primary-color;
-        width: 25%;
-        height: 100%;
-        margin: .5rem;
+        width: 30vh;
+        height: 45vh;
+        padding: .5rem;
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        
     }
+    &__block{
+        background-color: $tertiary-color;
+    }
+    
 
 }
 
 .title {
     text-align: center;
+  
     &__genre{
-        margin-top: 5rem;
-        margin-bottom: 3rem;
+        padding-top: 3rem;
+        margin-bottom: 0;
         font-size: 30px;
         font-weight: bold;
         
@@ -107,14 +138,14 @@ $grid-gutter: $layout-margin * .25;
 
 .top-film{
     &__img{
-        width: 40%;
+        width: 30%;
         height: 60vh;
+        margin: 1rem;
         
     }
     &__container{
-        //border: .1rem solid $primary-color;
-        //margin: 0px;
-        background-color: rgb(0,0,0);
+        //padding: 1rem;
+        background: $tertiary-color;
         width: 100%;
         height: 40% ;
         display: flex;
@@ -128,7 +159,7 @@ $grid-gutter: $layout-margin * .25;
         //align-items: center;
         //justify-content: center;
     }&__title{
-        color: $secondary-color;
+        color: $primary-color;
         font-size: 70px;
         margin-bottom: 10px;
     }
@@ -144,3 +175,48 @@ $grid-gutter: $layout-margin * .25;
         color:$secondary-color
     }
 }
+
+
+//modal
+        
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    &__content {
+        background-color: #fefefe;
+        margin: auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 50%;
+    }
+    &__data{
+        display: flex;
+        justify-content: center;
+        &--details{
+            padding-left: 4rem;
+        }
+    }
+    &__close {
+        color: #aaaaaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+        &:hover,
+        &:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+            }
+    }
+}
+
+
