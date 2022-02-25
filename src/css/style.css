@@ -1,5 +1,7 @@
+@import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,900;1,400&display=swap");
 body {
   background-color: #436b95;
+  font-family: "Lato", sans-serif;
 }
 
 .header {
@@ -9,6 +11,8 @@ body {
   align-items: center;
   flex-wrap: wrap;
   width: 100%;
+  font-weight: bold;
+  margin-bottom: 2rem;
 }
 .header__logo {
   margin-left: 1rem;
@@ -46,7 +50,6 @@ body {
   margin-top: 1rem;
   height: 100%;
   position: relative;
-  transition: 200ms opacity ease-in-out;
 }
 .film__header {
   width: auto;
@@ -84,7 +87,7 @@ body {
   opacity: 1;
 }
 .film__content {
-  width: 30vh;
+  width: 30vw;
   height: 45vh;
   padding: 0.5rem;
   display: flex;
@@ -102,12 +105,12 @@ body {
 .title__genre {
   padding-top: 3rem;
   margin-bottom: 0;
-  font-size: 30px;
+  font-size: 3rem;
   font-weight: bold;
 }
 .title__category {
   margin-top: 0.5rem;
-  font-size: 16px;
+  font-size: 1rem;
 }
 
 .img__category {
@@ -128,14 +131,15 @@ body {
   justify-content: center;
 }
 .top-film__data {
+  margin: 5rem;
   width: 50%;
   height: 100%;
   text-align: center;
 }
 .top-film__title {
-  color: #000;
-  font-size: 70px;
+  font-size: 4rem;
   margin-bottom: 10px;
+  font-weight: bold;
 }
 
 .btn {
@@ -149,28 +153,22 @@ body {
   background-color: gray;
   color: #fff;
 }
+.btn:hover {
+  background-color: #436b95;
+  transform: scale(1.1);
+}
 
 .modal {
   display: none;
-  /* Hidden by default */
   position: fixed;
-  /* Stay in place */
   z-index: 1;
-  /* Sit on top */
   padding-top: 100px;
-  /* Location of the box */
   left: 0;
   top: 0;
   width: 100%;
-  /* Full width */
   height: 100%;
-  /* Full height */
   overflow: auto;
-  /* Enable scroll if needed */
-  background-color: black;
-  /* Fallback color */
   background-color: rgba(0, 0, 0, 0.4);
-  /* Black w/ opacity */
 }
 .modal__content {
   background-color: #fefefe;
@@ -186,10 +184,13 @@ body {
 .modal__data--details {
   padding-left: 4rem;
 }
+.modal__data--img {
+  width: 35vw;
+}
 .modal__close {
-  color: #aaaaaa;
+  color: gray;
   float: right;
-  font-size: 28px;
+  font-size: 2.5rem;
   font-weight: bold;
 }
 .modal__close:hover, .modal__close:focus {

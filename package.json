@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "sass": "sass --watch ./src/sass/main.scss:./src/css/style.css"
+    "sass": "sass --watch ./src/sass/main.scss:./src/css/style.css",
+    "prefix": "postcss ./src/css/style.css --use autoprefixer -d ./src/css/prefixed/"
   },
   "repository": {
     "type": "git",
@@ -12,6 +13,7 @@
   },
   "author": "Jesusa SADEY",
   "license": "ISC",
+  "browserslist": "last 4 versions",
   "bugs": {
     "url": "https://github.com/jheslian/just-stream-it/issues"
   },

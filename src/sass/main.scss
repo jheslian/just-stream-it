@@ -1,30 +1,26 @@
-$primary-color: #000;
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,900;1,400&display=swap');
+$primary-color: #436b95;
 $secondary-color: #fff;
-$header-color: gray;
-$tertiary-color: rgba(255, 255, 255, 0.475);
-$colour-primary: #15DEA5;
-$colour-secondary: #001534;
-$colour-accent: #D5FFB8;
-$colour-white: #fff;
-$colour-invalid: #DB464C;
-$background-color: #436b95;
-$heading-shadow-size: .55rem;
-$layout-margin: 6rem;
-$grid-gutter: $layout-margin * .25;
+$btn-gray-color: gray;
+$opacity-black-color :rgba(0,0,0,0.4);
+$opacity-white-color: rgba(255, 255, 255, 0.475);
+
 
 body{
-    background-color: $background-color;
-    
+    background-color: $primary-color;
+    font-family: 'Lato', sans-serif;
 }
 
-.header {
-    background: $tertiary-color;
+.header{
+    background: $opacity-white-color;
     height: 8rem;
     display: flex;
     align-items: center;
     flex-wrap: wrap;
     width: 100%;
-    &__logo {
+    font-weight: bold;
+    margin-bottom: 2rem;
+    &__logo{
         margin-left: 1rem;
         width: 150px;
         height: 80%;
@@ -32,11 +28,11 @@ body{
     }
 }
 
-.nav {
-    padding-right: $layout-margin;
+.nav{
+    padding-right: 6rem;
     flex: 2 1 auto;
     text-align: right;
-    &__link {
+    &__link{
         display: inline;
         font-size: 3rem;
         padding-left: 1.5rem;
@@ -44,43 +40,36 @@ body{
         text-decoration: none;
         color: $secondary-color;
         }
-        &--active {
+        &--active{
             color: $secondary-color;
             &:hover{
                 cursor:default;
-                color: $background-color;
+                color: $primary-color;
             }
         }
         & a:hover{
-            color: $background-color;
+            color: $primary-color;
         }
     }
 }
 
-.film {
+.film{
     margin-top: 1rem;
     height: 100%;
     position: relative;
-    //background-color: #15DEA5;
-    transition: 200ms opacity ease-in-out;
-    
     &__header{
         width: auto;   
     }
-    &__container{//carrousel
+    &__container{
         display: flex;
         justify-content: center;
-        margin-bottom: 8rem; 
-       
-        
+        margin-bottom: 8rem;
         &--keys{
             position: absolute;
             cursor: pointer;
             height: 60px;
             width: 60px;
             margin-top: -40px;
-
-            //justify-content: space-evenly;
         }   
         &--rightBtn{
             margin-right: 3rem;
@@ -104,8 +93,7 @@ body{
         }
     }
     &__content{
-        //border: .1rem solid $primary-color;
-        width: 30vh;
+        width: 30vw;
         height: 45vh;
         padding: .5rem;
         display: flex;
@@ -114,64 +102,54 @@ body{
         align-items: center;
     }
     &__block{
-        background-color: $tertiary-color;
+        background-color: $opacity-white-color;
     }
-    
-
 }
 
-.title {
+.title{
     text-align: center;
-  
     &__genre{
         padding-top: 3rem;
         margin-bottom: 0;
-        font-size: 30px;
+        font-size: 3rem;
         font-weight: bold;
-        
     }
-    &__category {
+    &__category{
         margin-top: .5rem;
-        font-size: 16px;
+        font-size: 1rem;
     }
 }
 
-.img {
-   
+.img{
     &__category{
         width: 200px;
         height: 300px;
     }
-    
-
 }
 
 .top-film{
     &__img{
         width: 30%;
         height: 60vh;
-        margin: 1rem;
-        
+        margin: 1rem;      
     }
     &__container{
-        //padding: 1rem;
-        background: $tertiary-color;
+        background: $opacity-white-color;
         width: 100%;
         height: 40% ;
         display: flex;
-        justify-content: center;        
+        justify-content: center;           
     }
     &__data{
-        //border: .1rem solid $primary-color;
+        
+        margin: 5rem;
         width: 50%;
         height:100%;
         text-align: center;
-        //align-items: center;
-        //justify-content: center;
     }&__title{
-        color: $primary-color;
-        font-size: 70px;
+        font-size: 4rem;
         margin-bottom: 10px;
+        font-weight: bold;
     }
 }
 .btn{
@@ -181,27 +159,30 @@ body{
     border-radius: 30px 30px;
     margin: 10px;
     &__info{
-        background-color: $header-color;
-        color:$secondary-color
+        background-color: $btn-gray-color;
+        color:$secondary-color;
+    }
+    &:hover{
+        background-color: $primary-color;
+        transform: scale(1.1);
     }
 }
 
 
 //modal
         
-.modal {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
-    padding-top: 100px; /* Location of the box */
+.modal{
+    display: none;
+    position: fixed;
+    z-index: 1;
+    padding-top: 100px;
     left: 0;
     top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-    &__content {
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: $opacity-black-color;
+    &__content{
         background-color: #fefefe;
         margin: auto;
         padding: 20px;
@@ -214,18 +195,21 @@ body{
         &--details{
             padding-left: 4rem;
         }
+        &--img{
+            width: 35vw;
+        }
     }
-    &__close {
-        color: #aaaaaa;
+    &__close{
+        color: $btn-gray-color;
         float: right;
-        font-size: 28px;
+        font-size: 2.5rem;
         font-weight: bold;
         &:hover,
-        &:focus {
+        &:focus{
             color: #000;
             text-decoration: none;
             cursor: pointer;
-            }
+        }
     }
 }
 

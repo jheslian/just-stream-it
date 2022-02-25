@@ -1,65 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <link rel="stylesheet" href="./src/css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> 
-</head>
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script defer src="./src/js/index.js"></script>
-
-<body>
-<header id="header" class="header">
-    <img class="header__logo" src="src/images/logo.png" alt="just stream it logo">
-    <nav class="nav">
-        <ul>
-            <li class="nav__link nav__link--active"><a href="./">Accueil</a></li>
-            <li class="nav__link"><a href="#">Categories</a></li>
-        </ul>
-    </nav>
-</header>
-<main id="main">
-<img src="" alt="">
-    <!-- The Modal -->
-    <div id="film-modal" class="modal">
-
-        <!-- Modal content -->
-        <div class="modal__content">
-            <span class="modal__close">&times;</span>
-            <div class="modal__data">
-
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+        <link rel="stylesheet" href="src/css/prefixed/style.css">
+        <script defer src="./src/js/index.js"></script>
+    </head>
+    <body>
+        <header id="header" class="header">
+            <img class="header__logo" src="src/images/logo.png" alt="just stream it logo">
+            <nav class="nav">
+                <ul>
+                    <li class="nav__link nav__link--active"><a href="./">Accueil</a></li>
+                    <li class="nav__link"><a href="#">Categories</a></li>
+                </ul>
+            </nav>
+        </header>
+        <main id="main">
+            <!-- The Modal -->
+            <div id="film-modal" class="modal">
+                <!-- Modal content -->
+                <div class="modal__content">
+                    <span class="modal__close">&times;</span>
+                    <div class="modal__data"></div>
+                </div>
             </div>
-            
-        </div>
-
-    </div>
-
-    <!-- best film -->
-    <div>
-        <section id="best-film" class="top-film__container">
-        </section>
-    </div>
-    <!-- top rated film -->
-    <div class="film__block">
-        <p class="title title__genre">Top rated movie</p>
-        <img class="film__container--keys film__container--rightBtn" src="src/images/key.png"/>
-        <img class="film__container--keys film__container--leftBtn" src="src/images/key.png"/>
-        <section id="good-films"  class="film film__container film__header">
-        
-        </section>
-    </div>
-    <!-- 3 categories with its film -->
-    <div id="categories">
-    </div>
-
-
-
-
-</main>
-</body>
+            <!-- best film -->
+            <div>
+                <div id="best-film" class="top-film__container">
+                </div>
+            </div>
+            <!-- top rated film -->
+            <div class="film__block">
+                <p class="title title__genre">Top rated movie</p>
+                <img class="film__container--keys film__container--rightBtn" src="src/images/key.png" alt="right button"/>
+                <img class="film__container--keys film__container--leftBtn" src="src/images/key.png" alt="left button"/>
+                <div id="good-films" class="film film__container film__header"></div> 
+            </div>
+            <!-- 3 genres with its film -->
+            <div id="categories"></div>
+        </main>
+    </body>
 </html>
-
- 
