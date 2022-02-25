@@ -116,10 +116,8 @@ const getGenreFilm = async function(url, idCategory){
             console.log("title", res.results[i].title)
         
             let data = `
-                
                 <p class="title__category">${res.results[i].title}</p>
-                <img id="${res.results[0].id}" class="info img__category" src="${res.results[i].image_url}" onerror="${imgError()}"/> 
-                `
+                <img id="${res.results[i].id}" class="info img__category" src="${res.results[i].image_url}" onerror="${imgError()}"/>`
             filmContainer.innerHTML = data
 
         } 
@@ -176,15 +174,15 @@ const filmContent = async function(url){
 
 bestFilm(bestFilmUrl)
 
-const modal = function(){
-     
+
+const modal = function(){     
     /**************   modal   **************/
     let modal = document.getElementById("film-modal");
     let infoBtn = document.getElementsByClassName("info");
  
     for (let i = 0; i < infoBtn.length; i++) {
         infoBtn[i].addEventListener("click", async function() {
-            //console.log("click"+ i, this.id)
+            console.log("cmodal no: ", this.id)
             //let filmId = getElementById(infoBtn[i].id)
             const res = await filmContent(filmRelPath+this.id)
             const content = `
@@ -220,17 +218,12 @@ const modal = function(){
 
 const carrousel = function(){
     //  const res = await filmContent(filmRelPath+filmId)
-   /**************   modal   **************/
+   
   
     let rightBtn = document.getElementsByClassName("film__container--rightBtn");
     let leftBtn = document.getElementsByClassName("film__container--leftBtn");
-    let filmContainers = document.getElementsByClassName("film")
     let goodFilm = document.getElementById('good-films')
-    
     let currentPage = 1
-    let maxPage = 1
-    let linkPage = ""
-    
 
     for (let i = 0; i < rightBtn.length; i++) {
         
