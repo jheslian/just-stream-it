@@ -3,13 +3,13 @@ let filmRelPath= `http://127.0.0.1:8000/api/v1/titles/`
 let genre_url = `http://127.0.0.1:8000/api/v1/genres/`
 let sort = "&sort_by=-imdb_score"
 let pages = [1, 2 , 3, 4, 5, 6, 7, 8, 9, 10]
-let pageNo = pages[Math.floor(Math.random() * pages.length)]
+//let pageNo = pages[Math.floor(Math.random() * pages.length)]
 
 
 function filmUrl(mainURL, genre){
+    //return mainURL.concat("&genre=",genre,sort)
+    console.log("film url", mainURL.concat("&genre=",genre,sort))
     return mainURL.concat("&genre=",genre,sort)
-
-    //return mainURL.concat("&genre=",genre,"&page=",pageNo,sort)
 }
 
 
@@ -31,7 +31,7 @@ const handleErrors = function(response){
 }
 
 /**
- * get all categories
+ * get all categories and create its container
  *
  * @param {string} url
  * @param {function} callback
@@ -52,39 +52,68 @@ const getGenres = async function(url){
             random = genres_list[Math.floor(Math.random() * genres_list.length)]
             if (genres.length < 3 && genres.indexOf(random) === -1){
                 genres.push(random)
+            }       
+        }
+        if(genres.length === 3){
+            genres = ["Drama", "Crime", "Action"]
+           // console.log('rendoom genres',genres)
+            for (let i=0; i < genres.length; i++) {
+                //console.log("gen", genres[i])
                 let categories = document.getElementById('categories')
                 let newdiv = document.createElement("div")
                 newdiv.className = "film__block" 
                 let section = `
-                <p class="title title__genre">${genres_list[i]}</p>
-                <img class="film__container--keys film__container--rightBtn" src="src/images/key.png"/>
-                <img class="film__container--keys film__container--leftBtn" src="src/images/key.png"/>
-                <section id="${genres_list[i]}"  class="film film__container film__header">
+                <p class="title title__genre">${genres[i]}</p>
+                
+                <section id="${genres[i]}"  class="film film__container film__header">
                 </section>`
+
                 newdiv.innerHTML=section
                 categories.appendChild(newdiv)
+                
             
-                getGenreFilm(filmUrl(films_url,String(genres_list[i])), String(genres_list[i]))
+                getGenreFilm(filmUrl(films_url,String(genres[i])), String(genres[i]))
+                
+                
+            }
             
-            }       
         }
-    }        
+    }    
+       
 }    
 
 getGenres(genre_url)
-
+//console.log("list 25", genres_list)
 const getGenreFilm = async function(url, idCategory){
+    //console.log("ffff")
+    let rightBtn = document.getElementsByClassName("film__container--rightBtn")
     let categoryContainer = document.getElementById(idCategory)
     let response = await fetch(url)
     handleErrors(response)
     let res = await response.json()
+    console.log("full",  idCategory, res.results)
+    if(idCategory == "good-films"){
+        let category= document.getElementById(idCategory)
+        let btnKeys = `<img id="rightBtn" class="film__container--keys film__container--rightBtn" src="src/images/key.png"/>
+            <img id="leftBtn" class="film__container--keys film__container--leftBtn" src="src/images/key.png"/>`
+        category.innerHTML[1] = btnKeys
+        //console.log("in good", res.next == null)
+        if(res.next == null){
+            rightBtn[0].style.visibility = "hidden";
+        }else{
+            rightBtn[0].style.visibility = "visible";
+        }
+
+    }
     for (let i = 0; i < res.results.length; i++) {
+        //console.log("dery", res.results[i].title)
         if (categoryContainer.children.length != null && categoryContainer.children.length < 7){
             let filmDiv = document.createElement('div')
             filmDiv.id = "div-"+res.results[i].id
             filmDiv.className = "film__content"
             categoryContainer.appendChild(filmDiv)
             filmContainer = document.getElementById("div-"+res.results[i].id)
+            console.log("title", res.results[i].title)
         
             let data = `
                 
@@ -95,12 +124,12 @@ const getGenreFilm = async function(url, idCategory){
 
         } 
     }
-
+    
 
     if (categoryContainer.children.length != null && categoryContainer.children.length< 7){
         await getGenreFilm(res.next, idCategory)
     }
-    modal()
+    modal()  
 }
 
 /**
@@ -113,7 +142,7 @@ function imgError(){
 }
 
 /**************   top rated films   **************/
-let goodFilmsUrl = "http://127.0.0.1:8000/api/v1/titles/?imdb_score_min=9&page=".concat(pageNo)
+let goodFilmsUrl = "http://127.0.0.1:8000/api/v1/titles/?imdb_score_min=9&page=".concat(1)
 let idCategory = "good-films"
 let bestFilmUrl = films_url.concat(sort)
 getGenreFilm(goodFilmsUrl ,idCategory)
@@ -148,16 +177,14 @@ const filmContent = async function(url){
 bestFilm(bestFilmUrl)
 
 const modal = function(){
-     //  const res = await filmContent(filmRelPath+filmId)
+     
     /**************   modal   **************/
     let modal = document.getElementById("film-modal");
     let infoBtn = document.getElementsByClassName("info");
-    let modelContent = document.getElementsByClassName('modal__data')
-
  
     for (let i = 0; i < infoBtn.length; i++) {
         infoBtn[i].addEventListener("click", async function() {
-            console.log("click"+ i, this.id)
+            //console.log("click"+ i, this.id)
             //let filmId = getElementById(infoBtn[i].id)
             const res = await filmContent(filmRelPath+this.id)
             const content = `
@@ -188,5 +215,62 @@ const modal = function(){
             })
 
         });
+    }
 }
+
+const carrousel = function(){
+    //  const res = await filmContent(filmRelPath+filmId)
+   /**************   modal   **************/
+  
+    let rightBtn = document.getElementsByClassName("film__container--rightBtn");
+    let leftBtn = document.getElementsByClassName("film__container--leftBtn");
+    let filmContainers = document.getElementsByClassName("film")
+    let goodFilm = document.getElementById('good-films')
+    
+    let currentPage = 1
+    let maxPage = 1
+    let linkPage = ""
+    
+
+    for (let i = 0; i < rightBtn.length; i++) {
+        
+        rightBtn[i].addEventListener("click", async function() {
+            currentPage= currentPage+1
+            
+            if(currentPage > 1){
+                leftBtn[i].style.visibility = "visible";
+            }
+            
+            console.log("c page",  currentPage)
+            let linkPage = "http://127.0.0.1:8000/api/v1/titles/?imdb_score_min=9&page="+currentPage
+            console.log("link", linkPage)
+            goodFilm.innerHTML = ""
+            await getGenreFilm(linkPage,'good-films' )
+            // if (maxPage < nextPage){
+            //     maxPage = nextPage
+            // }
+            //currentPage+1
+        });
+    }
+    for (let i = 0; i < leftBtn.length; i++) {
+        
+        leftBtn[i].addEventListener("click", async function() {
+            
+            currentPage = currentPage-1
+            if(currentPage === 1){
+                leftBtn[i].style.visibility = "hidden";
+            }
+            console.log("prev page", currentPage)
+            let linkPage = "http://127.0.0.1:8000/api/v1/titles/?imdb_score_min=9&page="+currentPage
+            console.log("link", linkPage)
+            goodFilm.innerHTML = ""
+            await getGenreFilm(linkPage,'good-films' )
+            //currentPage-1
+            
+        });
+    }  
+    
+}
+document.body.onload = function(){
+    carrousel()
 }

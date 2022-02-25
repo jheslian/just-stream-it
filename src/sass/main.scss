@@ -61,6 +61,8 @@ body{
     margin-top: 1rem;
     height: 100%;
     position: relative;
+    //background-color: #15DEA5;
+    transition: 200ms opacity ease-in-out;
     
     &__header{
         width: auto;   
@@ -83,14 +85,22 @@ body{
         &--rightBtn{
             margin-right: 3rem;
             right:0;
-            opacity: 3;
+            opacity: 5;
             transform: rotate(0deg);
+            &:hover{
+                transform: rotate(0deg) scale(1.2);
+                opacity: 1;
+            }
         }
         &--leftBtn{
             margin-left: 3rem;
             left: 0;
-            opacity: 3;
+            opacity: 5;
             transform: rotate(180deg);
+            &:hover{
+                transform: rotate(180deg) scale(1.2);
+                opacity: 1;
+            }
         }
     }
     &__content{

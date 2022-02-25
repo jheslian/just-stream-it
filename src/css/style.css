@@ -46,6 +46,7 @@ body {
   margin-top: 1rem;
   height: 100%;
   position: relative;
+  transition: 200ms opacity ease-in-out;
 }
 .film__header {
   width: auto;
@@ -65,14 +66,22 @@ body {
 .film__container--rightBtn {
   margin-right: 3rem;
   right: 0;
-  opacity: 3;
+  opacity: 5;
   transform: rotate(0deg);
+}
+.film__container--rightBtn:hover {
+  transform: rotate(0deg) scale(1.2);
+  opacity: 1;
 }
 .film__container--leftBtn {
   margin-left: 3rem;
   left: 0;
-  opacity: 3;
+  opacity: 5;
   transform: rotate(180deg);
+}
+.film__container--leftBtn:hover {
+  transform: rotate(180deg) scale(1.2);
+  opacity: 1;
 }
 .film__content {
   width: 30vh;
