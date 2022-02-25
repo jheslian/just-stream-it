@@ -94,7 +94,6 @@ const GetGenres = async function(url){
         }
         if(genres.length === 3){  
             for (let i=0; i < genres.length; i++) {
-                //console.log("gen", genres[i])
                 let categories = document.getElementById('categories')
                 let newdiv = document.createElement("div")
                 newdiv.className = "film__block" 
@@ -139,15 +138,12 @@ const AddFilmToGenre = async function(url, idCategory){
             let filmDiv = document.createElement('div')
             filmDiv.id = "div-"+res.results[i].id
             filmDiv.className = "film__content" 
-            console.log("title", res.results[i].title)
-        
             let data = `
                 <p class="title__category">${res.results[i].title}</p>
                 <img id="${res.results[i].id}" class="info img__category" src="${res.results[i].image_url}" onerror="${ImgError()}"/>`
             filmDiv.innerHTML = data
             categoryContainer.appendChild(filmDiv)
-
-        } 
+        }
     }
 
     if (categoryContainer.children.length != null && categoryContainer.children.length< 7){
@@ -180,11 +176,14 @@ AddFilmToGenre(goodFilmsUrl ,genre)
 const GetTopFilm = async function(url) {
     let bestFilmContainer = document.getElementById("best-film")
     let res = await FetchUrl(url)
+    console.log("des", res.results[0])
+    let filmDetail = await FetchUrl(res.results[0].url)
     let data = `
         <div class="top-film__data">
             <h1 class="top-film__title">${res.results[0].title}</h1>
+            <p>${filmDetail.description}</p>
             <button class="btn btn__play"><i class="fa fa-play"></i> Play</button>
-            <button id="${res.results[0].id}" class="btn btn__info info">&#9432; More info</button>
+            <button id="${res.results[0].id}" class="btn btn__info info">&#9432; More info</button>     
         </div>    
         <img class="top-film__img" src="${res.results[0].image_url}" onerror="${ImgError()}"/> 
         ` 
