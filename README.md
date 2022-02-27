@@ -29,6 +29,7 @@
 			 
 ## Getting started:
 **Note**: To make the application work an API provided must be used and launch properly
+
 Film API - [OCMovies-API-EN-FR](https://github.com/OpenClassrooms-Student-Center/OCMovies-API-EN-FR) 
  1. Visit the Film API that was provided and follow the instructions to launch it.
  2. Clone this respository with: `https://github.com/jheslian/just-stream-it.git` on a terminal or on command prompt
